@@ -47,7 +47,6 @@ async function handleIncomingMessage(data: LinqPayload["data"]) {
 
 async function handleOnboarding(chatId: string, phone: string) {
   console.log(`Onboarding: ${phone}`);
-  // await sendLinqMessage(phone, "Welcome message here");
 }
 
 async function handleGeneralChat(chatId: string, text: string) {

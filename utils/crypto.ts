@@ -17,5 +17,8 @@ export function verifyLinqSignature(
     return false;
   }
 
+  console.log("Expected Signature:", digest);
+  console.log("Received Signature:", signature);
+
   return timingSafeEqual(digestBuffer, signatureBuffer);
 }
