@@ -14,5 +14,7 @@ export function getEnvVar(name: string): string {
 export const config = {
   linq: {
     phoneNumber: getEnvVar("NEXT_PUBLIC_LINQ_PHONE_NUMBER"),
+    apiKey: getEnvVar("LINQ_API_KEY"),
+    webhookSecret: getEnvVar("LINQ_WEBHOOK_SECRET"),
   },
 };
