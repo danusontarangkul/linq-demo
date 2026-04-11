@@ -1,4 +1,4 @@
-// services/linq-handler.ts
+import { sendLinqMessage } from "@/utils/linq-api";
 
 export type LinqPayload = {
   event_type: "message.received" | "message.failed" | "message.sent" | string;
@@ -46,9 +46,18 @@ async function handleIncomingMessage(data: LinqPayload["data"]) {
 }
 
 async function handleOnboarding(chatId: string, phone: string) {
-  console.log(`Onboarding: ${phone}`);
-}
+  console.log(`[Linq Service] Starting onboarding for: ${phone}`);
 
+  try {
+    await sendLinqMessage(chatId, "Welcome! You're now on the list.");
+    console.log(`[Linq Service] Onboarding message sent to ${phone}`);
+  } catch (error) {
+    console.error(
+      `[Linq Service] Failed to send onboarding message to ${phone}:`,
+      error,
+    );
+  }
+}
 async function handleGeneralChat(chatId: string, text: string) {
   console.log(`General Chat: ${chatId}`);
 }

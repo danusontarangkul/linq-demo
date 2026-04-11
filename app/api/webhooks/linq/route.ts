@@ -6,14 +6,23 @@ import { handleLinqEvent } from "@/services/linq-handler";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.text();
-    const signature = req.headers.get("x-linq-signature");
 
-    if (!verifyLinqSignature(body, signature, config.linq.webhookSecret)) {
+    const signature = req.headers.get("x-webhook-signature");
+    const timestamp = req.headers.get("x-webhook-timestamp");
+
+    if (
+      !verifyLinqSignature(
+        body,
+        timestamp,
+        signature,
+        config.linq.webhookSecret,
+      )
+    ) {
+      console.error("[Linq Webhook] Signature mismatch");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const payload = JSON.parse(body);
-
     await handleLinqEvent(payload);
 
     return NextResponse.json({ success: true });
